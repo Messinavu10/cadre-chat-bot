@@ -16,8 +16,10 @@ knowledge base in `src/knowledge/`. When it doesn't know, it **escalates** (offe
 or connect a human). It must **never invent** pricing, commitments, timelines, or facts about Cadre.
 A bot that says "let me connect you" is correct; a bot that hallucinates a price is a failure.
 
-See `plan.md` for phased scope and the explicit in/out-of-scope decisions. Do not build anything
-marked out-of-scope without updating `plan.md` first.
+See `plan.md` for phased scope and the explicit in/out-of-scope decisions, and `spec.md` for the
+architecture and decision records (ADRs) behind every significant choice. Do not build anything
+marked out-of-scope without updating `plan.md` first; record significant architecture decisions in
+`spec.md` (add an ADR + a Decision Log entry).
 
 ## Project links
 
@@ -66,6 +68,7 @@ src/
 AGENTS.md           # agent coding rules (Next 16 warning)
 CLAUDE.md           # this file
 plan.md             # phased plan + scope decisions
+spec.md             # architecture + decision records (ADRs) + decision log
 ```
 
 ## Commands
