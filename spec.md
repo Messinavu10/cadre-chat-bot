@@ -73,8 +73,12 @@ OpenAI direct (fine, but doesn't lean into the Claude culture).
 **Revisit when:** we need a provider-specific feature OpenRouter doesn't expose, or cost/latency
 favors a direct integration.
 
-### ADR-003 — Vercel AI SDK for chat plumbing
-**Status:** Accepted · **Decision:** Use `ai` (v7) + `@openrouter/ai-sdk-provider` (v2).
+### ADR-003 — Vercel AI SDK for chat plumbing (pinned to v6)
+**Status:** Accepted · **Decision:** Use `ai` (**v6**, pinned) + `@openrouter/ai-sdk-provider` (v2).
+**Note:** Initially installed `ai@7` (latest), but the provider's stable release peer-requires
+`ai@^6` (v7 support is alpha only). Vercel's strict `npm install` failed on the mismatch. Pinned to
+the provider's supported peer (`ai@^6`) rather than forcing an unsupported combo — re-verified all
+scenarios on v6.
 **Rationale:** Handles streaming out of the box and provides the `useChat` React hook, removing the
 need to hand-roll SSE. Pairs natively with Vercel and Next.
 **Alternatives:** Raw `fetch` to OpenRouter's OpenAI-compatible API + manual SSE (more code, fully
@@ -149,3 +153,4 @@ path if grounding quality regresses); Opus tiers (overkill/expensive for grounde
 | 2026-06-30 | Stateless; no auth/DB for MVP (ADR-005) | Accepted |
 | 2026-06-30 | Grounded-with-escalation; system prompt as contract (ADR-006) | Accepted |
 | 2026-06-30 | Default model Claude Haiku 4.5, env-swappable (ADR-007) | Accepted |
+| 2026-06-30 | Pin `ai` to v6 (provider peer dep; v7 broke Vercel install) | Accepted |

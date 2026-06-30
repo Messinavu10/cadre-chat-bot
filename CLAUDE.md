@@ -36,9 +36,10 @@ marked out-of-scope without updating `plan.md` first; record significant archite
   writing route code.
 - **LLM via OpenRouter**, routed to a **Claude** model. OpenRouter is Cadre's named partner for
   model access; routing to Claude also mirrors their Anthropic partnership. One API, swappable model.
-- **Chat plumbing:** **Vercel AI SDK** (`ai` v7) + `@openrouter/ai-sdk-provider` (v2). Gives us
-  streaming + the `useChat` hook. AI SDK v5+ changed APIs vs. older docs — verify current
-  `streamText`/route patterns before assuming.
+- **Chat plumbing:** **Vercel AI SDK** (`ai` **v6** — pinned) + `@openrouter/ai-sdk-provider` (v2).
+  Gives us streaming + the `useChat` hook. NOTE: pinned to `ai@^6` because the provider's stable
+  release peer-requires v6; do NOT bump `ai` to v7 (only alpha provider support exists). AI SDK v5+
+  changed APIs vs. older docs — verify current `streamText`/route patterns before assuming.
 - **Styling:** Tailwind CSS. **Components:** a UI lib (e.g. shadcn/ui) is allowed — not graded on CSS.
 
 ## Critical rules
