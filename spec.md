@@ -112,6 +112,16 @@ artifact, not an afterthought, is the core of the system design.
 **Alternatives:** open-ended assistant with broad latitude (higher hallucination risk, off-brand).
 **Revisit when:** we add tools/actions (real booking, account lookup) that change what the bot can do.
 
+### ADR-007 — Default model: Claude Haiku 4.5, swappable via env
+**Status:** Accepted · **Context:** Pick the specific model behind the bot.
+**Decision:** Default to `anthropic/claude-haiku-4.5`; override with `OPENROUTER_MODEL` (no code change).
+**Rationale:** The bot is high-volume and latency-sensitive over a small knowledge base. Haiku 4.5
+is the fast, low-cost tier (~$1/M input tokens) and passed all six brief scenarios with correct
+grounding and escalation in `curl` testing — so paying for a bigger model isn't justified.
+**Alternatives:** `claude-sonnet-5` (stronger instruction-following, ~2× cost — kept as the upgrade
+path if grounding quality regresses); Opus tiers (overkill/expensive for grounded Q&A).
+**Revisit when:** grounding/escalation quality slips, or we add multi-step reasoning or tool use.
+
 ## 5. Security
 
 - API key server-side only; never shipped to the client or committed. The `/api/chat` route runs on
@@ -138,3 +148,4 @@ artifact, not an afterthought, is the core of the system design.
 | 2026-06-30 | Knowledge in-context, no RAG (ADR-004) | Accepted |
 | 2026-06-30 | Stateless; no auth/DB for MVP (ADR-005) | Accepted |
 | 2026-06-30 | Grounded-with-escalation; system prompt as contract (ADR-006) | Accepted |
+| 2026-06-30 | Default model Claude Haiku 4.5, env-swappable (ADR-007) | Accepted |
