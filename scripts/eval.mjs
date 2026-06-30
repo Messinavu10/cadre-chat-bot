@@ -118,9 +118,31 @@ async function ask(prompt) {
   }
 }
 
+// Pre-flight: is the target actually reachable? Turns a cryptic "fetch failed" x6 into one
+// clear, actionable message (the #1 gotcha: forgetting to start the dev server).
+async function isReachable() {
+  try {
+    await fetch(BASE_URL, { method: "GET", signal: AbortSignal.timeout(5000) });
+    return true; // any HTTP response (even 404/405) means the server is up
+  } catch {
+    return false;
+  }
+}
+
 // --- run ------------------------------------------------------------------
 async function main() {
   console.log(`\nCadre chatbot eval → ${ENDPOINT}\n${"=".repeat(60)}`);
+
+  if (!(await isReachable())) {
+    console.error(
+      `\n❌ Could not reach ${BASE_URL}.\n` +
+        `   Is the target running?\n` +
+        `   • Local:      start the app first with \`npm run dev\`, then re-run \`npm run eval\`.\n` +
+        `   • Production: EVAL_URL=https://cadre-chat-bot.vercel.app npm run eval\n`
+    );
+    process.exit(1);
+  }
+
   let passedScenarios = 0;
 
   for (const s of scenarios) {
