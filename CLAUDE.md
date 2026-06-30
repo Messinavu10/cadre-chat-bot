@@ -78,6 +78,9 @@ spec.md             # architecture + decision records (ADRs) + decision log
 - Dev: `npm run dev` (http://localhost:3000)
 - Build (run before every push — catches type errors): `npm run build`
 - Lint: `npm run lint`
+- Eval (behavior smoke test of the 6 brief scenarios — grounding + guardrails): `npm run eval`
+  (targets localhost; `EVAL_URL=https://… npm run eval` for a post-deploy check). Run after any
+  change to the system prompt or knowledge base.
 
 ## Environment variables
 
@@ -88,4 +91,6 @@ spec.md             # architecture + decision records (ADRs) + decision log
 
 - Subagents and custom slash commands are added **when a task calls for them**, each in its own
   commit — not pre-fabricated up front.
+- `/test-bot` (`.claude/commands/`) runs `npm run eval`, interprets failures, and proposes prompt/
+  knowledge fixes — added after running the scenario checks by hand became repetitive.
 - When debugging, give the actual error output + context; don't re-run a failing prompt blind.

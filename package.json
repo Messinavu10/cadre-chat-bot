@@ -1,12 +1,13 @@
 {
-  "name": "scaffold",
+  "name": "cadre-chat-bot",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "eval": "node scripts/eval.mjs"
   },
   "dependencies": {
     "@openrouter/ai-sdk-provider": "^2.10.0",
