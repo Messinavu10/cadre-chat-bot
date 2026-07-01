@@ -154,3 +154,4 @@ path if grounding quality regresses); Opus tiers (overkill/expensive for grounde
 | 2026-06-30 | Grounded-with-escalation; system prompt as contract (ADR-006) | Accepted |
 | 2026-06-30 | Default model Claude Haiku 4.5, env-swappable (ADR-007) | Accepted |
 | 2026-06-30 | Pin `ai` to v6 (provider peer dep; v7 broke Vercel install) | Accepted |
+| 2026-06-30 | Add focused Tier-1 unit tests (Vitest); eval stays the behavior net | Accepted |

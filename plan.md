@@ -51,6 +51,19 @@ Pinned during Phase 2; swappable because we go through OpenRouter.
 - A `/test-bot` custom command + lightweight eval over the brief's scenarios.
 - Suggested-question chips on first load.
 
+## Testing strategy
+
+Two layers, chosen deliberately. Unit tests are **not** required by the brief, so this is a
+focused, high-signal subset — not a coverage chase.
+- **Behavior eval** (`npm run eval` / `/test-bot`) — the primary net for an AI product: fires the
+  six brief scenarios and asserts grounding + guardrails end-to-end.
+- **Focused unit tests** (`npm test`, Vitest) — the logic with real branches/edge cases: the
+  `/api/chat` request validation + error paths, and the OpenRouter client (missing-key guard, model
+  config). 100% coverage on those two files (enforced via `vitest.config.ts` thresholds).
+
+Intentionally **not** unit-tested: presentational components (SVG), static knowledge strings, and
+framework glue — low bug-catching value, and runtime behavior is already covered by the eval.
+
 ## Phases (sequential — Claude can execute these in order)
 
 - **Phase 0 — Foundation (this commit).** git init, CLAUDE.md, plan.md, .gitignore, .claude/settings.json.
