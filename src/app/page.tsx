@@ -30,7 +30,7 @@ function stripEmDashes(text: string): string {
 }
 
 export default function Home() {
-  const { messages, sendMessage, status, error, setMessages, stop } = useChat();
+  const { messages, sendMessage, status, setMessages, stop } = useChat();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -146,8 +146,8 @@ export default function Home() {
               How can we help you with your AI strategy?
             </h1>
             <p className="mt-3 max-w-md text-center text-muted">
-              Ask about Cadre AI&apos;s services, the AI Maturity Index, our approach to
-              security, or how to book a strategy call.
+              Get quick answers about working with Cadre AI. Tap a question below or ask
+              your own.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-2">
               {SUGGESTIONS.map((s) => (
@@ -204,10 +204,10 @@ export default function Home() {
 
               {status === "error" && (
                 <div className="rounded-lg border border-foreground/20 bg-foreground/[0.03] px-4 py-3 text-sm">
-                  Something went wrong reaching Ask Cadre. Please try again — or reach the
-                  Cadre team directly at{" "}
+                  Uh-oh, I ran into a snag and couldn&apos;t finish that. Please start a new
+                  chat to keep learning more about Cadre, or reach the team at{" "}
                   <a
-                    href="https://cadreai.com"
+                    href="https://www.cadreai.com/contact"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
@@ -215,9 +215,6 @@ export default function Home() {
                     cadreai.com
                   </a>
                   .
-                  {error?.message ? (
-                    <span className="mt-1 block text-muted">({error.message})</span>
-                  ) : null}
                 </div>
               )}
 
