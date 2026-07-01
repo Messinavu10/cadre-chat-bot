@@ -101,9 +101,9 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       {/* Header — cube mark + wordmark, left aligned */}
-      <header className="border-b border-border">
+      <header className="shrink-0 border-b border-border">
         <div className="flex w-full items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2.5">
             <CadreCube size={22} />
@@ -167,7 +167,7 @@ export default function Home() {
       ) : (
         /* Conversation — messages scroll, input pinned to the bottom */
         <>
-          <main className="flex-1 overflow-y-auto">
+          <main className="min-h-0 flex-1 overflow-y-auto">
             <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
               {messages.map((m) =>
                 m.role === "user" ? (
@@ -225,7 +225,7 @@ export default function Home() {
             </div>
           </main>
 
-          <footer className="border-t border-border">
+          <footer className="shrink-0 border-t border-border">
             <div className="mx-auto w-full max-w-2xl px-4 py-4">
               {inputBar}
               {disclaimer}
