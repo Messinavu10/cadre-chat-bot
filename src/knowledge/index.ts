@@ -4,6 +4,7 @@ import { maturityIndex } from "./maturity-index";
 import { portal } from "./portal";
 import { booking } from "./booking";
 import { securityAndLlm } from "./security-and-llm";
+import { caseStudies } from "./case-studies";
 
 /**
  * The bot's entire source of truth. It is small and bounded by design, so it is injected directly
@@ -17,6 +18,7 @@ export const KNOWLEDGE_BASE = [
   portal,
   booking,
   securityAndLlm,
+  caseStudies,
 ]
   .map((section) => section.trim())
   .join("\n\n");
