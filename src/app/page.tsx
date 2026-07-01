@@ -22,8 +22,15 @@ function textOf(message: UIMessage): string {
     .join("");
 }
 
+// The system prompt tells the model to avoid em dashes, but that's probabilistic, so enforce it
+// deterministically at render. Only horizontal whitespace ([^\S\r\n]) around the dash is consumed,
+// never newlines, so list/paragraph structure is preserved (a "\s"-based version merged lines).
+function stripEmDashes(text: string): string {
+  return text.replace(/[^\S\r\n]*—[^\S\r\n]*/g, ", ");
+}
+
 export default function Home() {
-  const { messages, sendMessage, status, error } = useChat();
+  const { messages, sendMessage, status, error, setMessages, stop } = useChat();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +48,12 @@ export default function Home() {
     const trimmed = text.trim();
     if (!trimmed || isBusy) return;
     sendMessage({ text: trimmed });
+    setInput("");
+  }
+
+  async function newChat() {
+    await stop(); // abort any in-flight stream before clearing, or it keeps generating
+    setMessages([]);
     setInput("");
   }
 
@@ -70,9 +83,12 @@ export default function Home() {
         <button
           type="submit"
           disabled={!input.trim() || isBusy}
-          className="rounded-xl bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Send"
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground text-background transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Send
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3.4 20.4l17.45-7.48a1 1 0 0 0 0-1.84L3.4 3.6a.993.993 0 0 0-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .69.71 1.16 1.39.91z" />
+          </svg>
         </button>
       </div>
     </form>
@@ -88,11 +104,36 @@ export default function Home() {
     <div className="flex flex-1 flex-col">
       {/* Header — cube mark + wordmark, left aligned */}
       <header className="border-b border-border">
-        <div className="flex w-full items-center gap-2.5 px-6 py-4">
-          <CadreCube size={22} />
-          <span className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight">
-            Ask Cadre
-          </span>
+        <div className="flex w-full items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-2.5">
+            <CadreCube size={22} />
+            <span className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight">
+              Ask Cadre
+            </span>
+          </div>
+          {!isEmpty && (
+            <button
+              type="button"
+              onClick={newChat}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-sm text-foreground transition-colors hover:border-foreground"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z" />
+              </svg>
+              New chat
+            </button>
+          )}
         </div>
       </header>
 
@@ -147,7 +188,7 @@ export default function Home() {
                           ),
                         }}
                       >
-                        {textOf(m)}
+                        {stripEmDashes(textOf(m))}
                       </ReactMarkdown>
                     </div>
                   </div>

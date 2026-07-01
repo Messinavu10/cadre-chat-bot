@@ -10,5 +10,6 @@ business stands today and where the highest-impact next steps are.
 Getting scored starts with a conversation: book a strategy call with a Cadre AI strategist and they
 will walk the organization through the assessment. If someone asks for an exact scoring
 methodology, a full dimension breakdown, or a self-serve scoring tool that isn't described here,
-treat it as a gap — offer to connect them with the team rather than inventing details.
+treat it as a gap: point them to get in touch at cadreai.com rather than inventing details. (The
+assistant cannot connect anyone to a person or arrange contact itself.)
 `;

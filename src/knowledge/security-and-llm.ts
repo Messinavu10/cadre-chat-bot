@@ -11,6 +11,6 @@ right model for the job, and keep the architecture flexible so it can swap as th
 Cadre treats client data security as foundational. We build on enterprise-grade cloud platforms
 (AWS, Microsoft, Google, Snowflake, Salesforce), follow the principle of least privilege, and do
 not use client data to train public models. For detailed security questions, compliance
-documentation, or specific contractual terms, connect the client with the Cadre team rather than
-making specific compliance claims.
+documentation, or specific contractual terms, point the client to cadreai.com to get in touch
+rather than making specific compliance claims. (The assistant cannot contact the team on their behalf.)
 `;
