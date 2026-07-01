@@ -45,6 +45,10 @@ Pinned during Phase 2; swappable because we go through OpenRouter.
 - **Real calendar/booking integration** — we surface a booking CTA/link, not a live scheduler.
 - **Database / chat persistence** — conversation is in-memory per session; no history store.
 - **Analytics dashboards, multi-tenant, CRM sync.**
+- **Rate limiting / abuse guard on `/api/chat`** — the endpoint is public and unauthenticated.
+  Real serverless rate limiting needs shared state (Upstash Redis); an in-memory limiter is theater
+  on Vercel. Deliberately deferred to production hardening (see spec.md "Scaling") over shipping a
+  guard that doesn't actually hold.
 
 ### 🅿️ Deferred (stretch, only if time remains)
 - Lead capture (collect email on escalation).

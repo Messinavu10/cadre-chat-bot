@@ -138,7 +138,11 @@ path if grounding quality regresses); Opus tiers (overkill/expensive for grounde
 - **Knowledge growth →** revisit ADR-004 (introduce RAG) once the corpus is large/dynamic.
 - **Persistence/analytics →** revisit ADR-005 (add a database) for history, lead capture, metrics.
 - **Actions →** revisit ADR-006 (add tools) for real calendar booking, CRM/lead capture, account lookup.
-- **Abuse/cost →** add rate limiting and an input cap on `/api/chat` before heavy public traffic.
+- **Abuse/cost →** `/api/chat` is public and unauthenticated, so it's exposed to abuse and cost
+  runaway. Deliberately unguarded in the MVP: correct rate limiting on serverless needs shared
+  state (an in-memory limiter doesn't survive instance recycling, so it'd be security theater), so
+  the real fix is a sliding-window limiter backed by Upstash Redis keyed by IP, plus a Vercel spend
+  cap as a backstop and an input length cap. Scoped out of the 4–6h build, not overlooked.
 
 ---
 
