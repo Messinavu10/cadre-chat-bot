@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
+/*
+ * Cadre AI brand palette, pulled from cadreai.com:
+ *  --colors--primary-backgroud  #faf9f6 (warm cream)
+ *  --colors--primary-black      #0b0707 (warm near-black)
+ *  --cadre-red                  #db4545 (accent)
+ * Light theme only — Cadre's site is light, so we don't do dark mode.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf9f6;
+  --foreground: #0b0707;
+  --cadre-red: #db4545;
+  --cadre-red-hover: #c33a3a;
+  --card: #ffffff;
+  --border: #e7e3d8;
+  --muted: #6b6660;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-cadre-red: var(--cadre-red);
+  --color-cadre-red-hover: var(--cadre-red-hover);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter-tight);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+}
+
+/* ---- Cube loader: a 3D rotating cube shown while Ask Cadre is thinking ---- */
+.cube-scene {
+  width: 26px;
+  height: 26px;
+  perspective: 180px;
+}
+.cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: cube-spin 1.8s cubic-bezier(0.55, 0.1, 0.45, 0.9) infinite;
+}
+.cube__face {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: var(--cadre-red);
+  border: 1px solid var(--background);
+}
+.cube__face--front {
+  transform: rotateY(0deg) translateZ(13px);
+}
+.cube__face--back {
+  transform: rotateY(180deg) translateZ(13px);
+  opacity: 0.85;
+}
+.cube__face--right {
+  transform: rotateY(90deg) translateZ(13px);
+  opacity: 0.7;
+}
+.cube__face--left {
+  transform: rotateY(-90deg) translateZ(13px);
+  opacity: 0.7;
+}
+.cube__face--top {
+  transform: rotateX(90deg) translateZ(13px);
+  opacity: 0.9;
+}
+.cube__face--bottom {
+  transform: rotateX(-90deg) translateZ(13px);
+  opacity: 0.6;
+}
+
+@keyframes cube-spin {
+  0% {
+    transform: rotateX(-24deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(-24deg) rotateY(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    animation-duration: 4s;
+  }
 }
