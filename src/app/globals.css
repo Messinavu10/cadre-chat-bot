@@ -1,27 +1,21 @@
 @import "tailwindcss";
 
 /*
- * Cadre AI brand palette, pulled from cadreai.com:
- *  --colors--primary-backgroud  #faf9f6 (warm cream)
- *  --colors--primary-black      #0b0707 (warm near-black)
- *  --cadre-red                  #db4545 (accent)
- * Light theme only — Cadre's site is light, so we don't do dark mode.
+ * Cadre AI — black & cream monochrome, from cadreai.com:
+ *   ink  #231f20 (their logo/text color)
+ *   cream background, white surfaces. No accent color — black & white only.
  */
 :root {
-  --background: #faf9f6;
-  --foreground: #0b0707;
-  --cadre-red: #db4545;
-  --cadre-red-hover: #c33a3a;
+  --background: #f4f1ea;
+  --foreground: #231f20;
   --card: #ffffff;
-  --border: #e7e3d8;
-  --muted: #6b6660;
+  --border: #e3ddd0;
+  --muted: #6f695f;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cadre-red: var(--cadre-red);
-  --color-cadre-red-hover: var(--cadre-red-hover);
   --color-card: var(--card);
   --color-border: var(--border);
   --color-muted: var(--muted);
@@ -35,61 +29,90 @@ body {
   font-family: var(--font-inter), Inter, Arial, sans-serif;
 }
 
-/* ---- Cube loader: a 3D rotating cube shown while Ask Cadre is thinking ---- */
-.cube-scene {
-  width: 26px;
-  height: 26px;
-  perspective: 180px;
-}
-.cube {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  animation: cube-spin 1.8s cubic-bezier(0.55, 0.1, 0.45, 0.9) infinite;
-}
-.cube__face {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  background: var(--cadre-red);
-  border: 1px solid var(--background);
-}
-.cube__face--front {
-  transform: rotateY(0deg) translateZ(13px);
-}
-.cube__face--back {
-  transform: rotateY(180deg) translateZ(13px);
-  opacity: 0.85;
-}
-.cube__face--right {
-  transform: rotateY(90deg) translateZ(13px);
-  opacity: 0.7;
-}
-.cube__face--left {
-  transform: rotateY(-90deg) translateZ(13px);
-  opacity: 0.7;
-}
-.cube__face--top {
-  transform: rotateX(90deg) translateZ(13px);
-  opacity: 0.9;
-}
-.cube__face--bottom {
-  transform: rotateX(-90deg) translateZ(13px);
-  opacity: 0.6;
+/* ---- Cadre cube: real brand mark, inked to match the UI ---- */
+.cube-piece {
+  fill: var(--foreground);
 }
 
-@keyframes cube-spin {
-  0% {
-    transform: rotateX(-24deg) rotateY(0deg);
-  }
+/* ---- Loader: the two cube pieces breathe out of phase while Ask Cadre thinks ---- */
+.cube-loader .cube-piece {
+  animation: cube-breathe 1.4s ease-in-out infinite;
+}
+.cube-loader .cube-piece--a {
+  animation-delay: 0s;
+}
+.cube-loader .cube-piece--b {
+  animation-delay: 0.22s;
+}
+@keyframes cube-breathe {
+  0%,
   100% {
-    transform: rotateX(-24deg) rotateY(360deg);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cube-loader .cube-piece {
+    animation: none;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cube {
-    animation-duration: 4s;
-  }
+/* ---- Markdown rendering for assistant replies (chat-tuned, restrained) ---- */
+.prose-cadre {
+  line-height: 1.65;
+}
+.prose-cadre > :first-child {
+  margin-top: 0;
+}
+.prose-cadre > :last-child {
+  margin-bottom: 0;
+}
+.prose-cadre p {
+  margin: 0.7em 0;
+}
+.prose-cadre h1,
+.prose-cadre h2,
+.prose-cadre h3 {
+  font-family: var(--font-inter-tight), var(--font-inter), sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.1em 0 0.45em;
+}
+.prose-cadre h1 {
+  font-size: 1.15rem;
+}
+.prose-cadre h2 {
+  font-size: 1.05rem;
+}
+.prose-cadre h3 {
+  font-size: 1rem;
+}
+.prose-cadre ul,
+.prose-cadre ol {
+  margin: 0.6em 0;
+  padding-left: 1.3em;
+}
+.prose-cadre ul {
+  list-style: disc;
+}
+.prose-cadre ol {
+  list-style: decimal;
+}
+.prose-cadre li {
+  margin: 0.25em 0;
+}
+.prose-cadre strong {
+  font-weight: 600;
+}
+.prose-cadre a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-cadre code {
+  background: rgba(35, 31, 32, 0.06);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
 }

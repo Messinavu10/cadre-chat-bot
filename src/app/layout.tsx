@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Ask Cadre",
   description:
     "Ask Cadre — the Cadre AI support assistant. Answers about our services, the AI Maturity Index, booking a strategy call, and more.",
+  icons: { icon: "/cube.svg" },
 };
 
 export default function RootLayout({
@@ -29,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${interTight.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="h-full flex flex-col">{children}</body>
     </html>
   );
 }
